@@ -1,8 +1,12 @@
 var express = require('express');
+var bodyParser = require('body-parser');
 var app = express();
 
-app.get('/name', function(req, res, next) {
-	query = req.query;
+app.use(bodyParser.urlencoded({extended: false}));
+
+
+app.post('/name', function(req, res, next) {
+	query = req.body;
 	first = query.first.toString();
 	last = query.last.toString();
 	next();
@@ -10,12 +14,13 @@ app.get('/name', function(req, res, next) {
 	res.send({name: `${first} ${last}`})
 })
 
-app.route('/name').get(function(req, res, next) {
+
+app.get('/name', function(req, res, next) {
 	query = req.query;
 	first = query.first.toString();
 	last = query.last.toString();
 	next();
-}).post(function(req, res) {
+}, function(req, res) {
 	res.send({name: `${first} ${last}`})
 })
 
@@ -36,18 +41,22 @@ app.get('/now', function(req, res, next) {
 
 console.log("Hello World")
 
+
 app.use(function(req, res, next) {
   console.log(req.method, req.path, "-", req.ip);
   next();
 })
+
 
 app.get('/', function(req, res) {
 	let path = __dirname + "/views/index.html"
 	res.sendFile(path)
 })
 
+
 let path = __dirname + "/public";
 app.use("/public", express.static(path))
+
 
 app.get('/json', function(req, res) {
     if(process.env.MESSAGE_STYLE == "uppercase") {
@@ -59,29 +68,4 @@ app.get('/json', function(req, res) {
 })
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- module.exports = app;
+module.exports = app;
