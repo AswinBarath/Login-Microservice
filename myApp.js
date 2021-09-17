@@ -1,71 +1,30 @@
-var express = require('express');
-var bodyParser = require('body-parser');
+var express = require('express')
 var app = express();
 
+// Mounting the Body Parser middleware - For receiving form data
+var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: false}));
 
-
-app.post('/name', function(req, res, next) {
-	query = req.body;
-	first = query.first.toString();
-	last = query.last.toString();
-	next();
-}, function(req, res) {
-	res.send({name: `${first} ${last}`})
-})
-
-
-app.get('/name', function(req, res, next) {
-	query = req.query;
-	first = query.first.toString();
-	last = query.last.toString();
-	next();
-}, function(req, res) {
-	res.send({name: `${first} ${last}`})
-})
-
-
-app.get('/:word/echo', function(req, res) {
-	word = req.params.word;
-	res.send({echo: word});
-})
-
-
-app.get('/now', function(req, res, next) {
-	req.time = new Date().toString();
-	next();
-}, function(req, res) {
-	res.send({time: req.time})
-})
-
-
-console.log("Hello World")
-
-
+// Root level logger - Logs the requests made to the server
 app.use(function(req, res, next) {
-  console.log(req.method, req.path, "-", req.ip);
-  next();
-})
+	console.log(`${req.method} ${req.path} - ${req.ip}`);
+	next();
+});
 
-
+// Serves the index.html file
 app.get('/', function(req, res) {
-	let path = __dirname + "/views/index.html"
-	res.sendFile(path)
-})
+	let path = __dirname + "/views/index.html";
+	res.sendFile(path);
+});
 
-
+// Serves the style.css file
 let path = __dirname + "/public";
-app.use("/public", express.static(path))
+app.use("/public", express.static(path));
 
-
-app.get('/json', function(req, res) {
-    if(process.env.MESSAGE_STYLE == "uppercase") {
-        let obj = {message: "HELLO JSON"}
-        res.json(obj)
-    }
-    let obj = {message: "Hello json"}
-	res.json(obj)
-})
-
+// Handles the form data
+var postHandler = function(req, res) {
+	res.json({name: `${req.body.first} ${req.body.last}`});
+};
+app.route('/name').post(postHandler);
 
 module.exports = app;
