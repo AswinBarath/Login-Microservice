@@ -47,7 +47,7 @@ Simplistic Login Microservice built with NodeJS & ExpressJS
 
 - Simplistic Microservice which serves **HTML**, **CSS** and **assets** like images using **NodeJS** and **ExpressJS**
 - The Microservice uses **Body parser** middleware to parse the data coming from POST requests and decode it in different formats
-- The Microservice also responds to the user with JSON data
+- The Microservice also responds back data to the user in JSON format
 - The Microservice implements **Root level logger** that logs the requests made to the server
 - Follows **best practices** and implements **code readability** by chaining Middlewares
 
