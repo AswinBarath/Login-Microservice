@@ -20,7 +20,7 @@ Simplistic Login Microservice built with NodeJS & ExpressJS
 ## Demo
 
 <p>
-<img src="pulic/Login Microservice.gif" alt="Login Microservice" />
+<img src="public/Login Microservice.gif" alt="Login Microservice" />
 </p>
 
 ---
